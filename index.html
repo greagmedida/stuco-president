@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LSST Student Body President</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --blue: #18608c;
+            --green: #0ee290;
+            --dark: #232323;
+            --light: #f5f7f8;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--green);
+        }
+
+        header h1 {
+            font-size: clamp(1.6rem, 4vw, 2.6rem);
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #d8d8d8;
+            font-size: 1rem;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            background: linear-gradient(
+                135deg,
+                var(--blue),
+                #124c70
+            );
+
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .hero h2 {
+            font-size: clamp(2rem, 6vw, 4rem);
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        .green-line {
+            width: 80px;
+            height: 5px;
+            background: var(--green);
+            margin: 25px auto;
+            border-radius: 10px;
+        }
+
+        /* =========================
+           CANDIDATES
+        ========================= */
+
+        .section {
+            max-width: 1250px;
+            margin: auto;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .candidate-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .candidate-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #111;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .candidate-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .candidate-number {
+            display: inline-block;
+            background: var(--green);
+            color: var(--dark);
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .candidate-info h3 {
+            font-size: 1.5rem;
+            color: var(--blue);
+            margin-bottom: 8px;
+        }
+
+        .candidate-info p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           POLL
+        ========================= */
+
+        .poll-section {
+            background: var(--dark);
+            color: white;
+            padding: 70px 20px;
+        }
+
+        .poll-box {
+            max-width: 700px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .poll-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .poll-box > p {
+            color: #ccc;
+            margin-bottom: 35px;
+        }
+
+        .poll-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .poll-option {
+            background: #333;
+            border: 2px solid #444;
+            color: white;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .poll-option:hover {
+            border-color: var(--green);
+            transform: translateY(-2px);
+        }
+
+        .poll-note {
+            margin-top: 25px;
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #161616;
+            color: #aaa;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9rem;
+        }
+
+        footer strong {
+            color: var(--green);
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
+            .candidate-grid {
+                grid-template-columns: 1fr;
+                max-width: 650px;
+                margin: auto;
+            }
+
+            .hero {
+                padding: 55px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+        <h1>Lewisville School of Science & Technology</h1>
+        <p>Student Council • Student Body President Election</p>
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+        <h2>Meet the Candidates</h2>
+
+        <div class="green-line"></div>
+
+        <p>
+            Get to know the three candidates running for
+            Student Body President and hear what they have to say.
+        </p>
+    </section>
+
+
+    <!-- CANDIDATES -->
+
+    <section class="section">
+
+        <h2 class="section-title">The Candidates</h2>
+
+        <p class="section-subtitle">
+            Watch each candidate's campaign video before making your prediction.
+        </p>
+
+
+        <div class="candidate-grid">
+
+            <!-- JUDE CAIN -->
+
+            <div class="candidate-card">
+
+                <div class="video-container">
+
+                    <iframe
+                        src="https://www.youtube.com/embed/k4Dy1qj3e4Q"
+                        title="Jude Cain campaign video"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+                <div class="candidate-info">
+
+                    <span class="candidate-number">
+                        CANDIDATE
+                    </span>
+
+                    <h3>Jude Cain</h3>
+
+                    <p>
+                        Candidate for Student Body President
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SHAWNMICHAELS RODRIGUEZ CALDERON -->
+
+            <div class="candidate-card">
+
+                <div class="video-container">
+
+                    <iframe
+                        src="https://www.youtube.com/embed/cI_hA2c1CnU"
+                        title="Shawnmichaels Rodriguez Calderon campaign video"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+                <div class="candidate-info">
+
+                    <span class="candidate-number">
+                        CANDIDATE
+                    </span>
+
+                    <h3>Shawnmichaels Rodriguez Calderon</h3>
+
+                    <p>
+                        Candidate for Student Body President
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- NIKKI ANUP -->
+
+            <div class="candidate-card">
+
+                <div class="video-container">
+
+                    <iframe
+                        src="https://www.youtube.com/embed/xfb6v0_nYcI"
+                        title="Nikki Anup campaign video"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+                <div class="candidate-info">
+
+                    <span class="candidate-number">
+                        CANDIDATE
+                    </span>
+
+                    <h3>Nikki Anup</h3>
+
+                    <p>
+                        Candidate for Student Body President
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- POLL -->
+
+    <section class="poll-section">
+
+        <div class="poll-box">
+
+            <h2>🗳️ Who Do You Think Will Win?</h2>
+
+            <p>
+                Make your prediction for Student Body President.
+            </p>
+
+            <div class="poll-options">
+
+                <button class="poll-option">
+                    Jude Cain
+                </button>
+
+                <button class="poll-option">
+                    Shawnmichaels Rodriguez Calderon
+                </button>
+
+                <button class="poll-option">
+                    Nikki Anup
+                </button>
+
+            </div>
+
+            <p class="poll-note">
+                This is an informal prediction poll and is not the official
+                Student Body President election.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            <strong>Lewisville School of Science & Technology</strong>
+        </p>
+
+        <p>
+            Student Council Election • 2026
+        </p>
+
+    </footer>
+
+</body>
+</html>
