@@ -397,48 +397,280 @@
 
     <section class="poll-section">
 
-        <div class="poll-box">
+    <div class="poll-box">
 
-            <h2>🗳️ Who Do You Think Will Win?</h2>
+        <h2>🗳️ Who Do You Think Will Win?</h2>
 
-            <p>
-                Make your prediction for Student Body President.
+        <p>
+            Make your prediction for Student Body President.
+        </p>
+
+        <div class="poll-options">
+
+            <a
+                class="poll-option"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSdvsptPSO3LWgSwzILrob3rzW532FgolLxo5uAoOrIsnypbkg/viewform?usp=pp_url&entry.248133074=Jude+Cain"
+                target="_blank">
+                Jude Cain
+            </a>
+
+            <a
+                class="poll-option"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSdvsptPSO3LWgSwzILrob3rzW532FgolLxo5uAoOrIsnypbkg/viewform?usp=pp_url&entry.248133074=Shawnmichaels+Rodriguez+Calderon"
+                target="_blank">
+                Shawnmichaels Rodriguez Calderon
+            </a>
+
+            <a
+                class="poll-option"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSdvsptPSO3LWgSwzILrob3rzW532FgolLxo5uAoOrIsnypbkg/viewform?usp=pp_url&entry.248133074=Nikki+Anup"
+                target="_blank">
+                Nikki Anup
+            </a>
+
+        </div>
+
+
+        <!-- LIVE RESULTS -->
+
+        <div class="results-container">
+
+            <h3>LIVE PREDICTION RESULTS</h3>
+
+            <p class="vote-count">
+                Total Predictions:
+                <strong id="total-votes">Loading...</strong>
             </p>
 
-            <div class="poll-options">
 
-    <a
-        class="poll-option"
-        href="https://docs.google.com/forms/d/e/1FAIpQLSdvsptPSO3LWgSwzILrob3rzW532FgolLxo5uAoOrIsnypbkg/viewform?usp=pp_url&entry.248133074=Jude+Cain"
-        target="_blank">
-        Jude Cain
-    </a>
+            <div class="result">
 
-    <a
-        class="poll-option"
-        href="https://docs.google.com/forms/d/e/1FAIpQLSdvsptPSO3LWgSwzILrob3rzW532FgolLxo5uAoOrIsnypbkg/viewform?usp=pp_url&entry.248133074=Shawnmichaels+Rodriguez+Calderon"
-        target="_blank">
-        Shawnmichaels Rodriguez Calderon
-    </a>
+                <div class="result-header">
+                    <span>Jude Cain</span>
+                    <span id="jude-percent">0%</span>
+                </div>
 
-    <a
-        class="poll-option"
-        href="https://docs.google.com/forms/d/e/1FAIpQLSdvsptPSO3LWgSwzILrob3rzW532FgolLxo5uAoOrIsnypbkg/viewform?usp=pp_url&entry.248133074=Nikki+Anup"
-        target="_blank">
-        Nikki Anup
-    </a>
+                <div class="progress-bar">
+                    <div
+                        id="jude-bar"
+                        class="progress-fill">
+                    </div>
+                </div>
 
-</div>
+            </div>
 
-            <p class="poll-note">
-                This is an informal prediction poll and is not the official
-                Student Body President election.
+
+            <div class="result">
+
+                <div class="result-header">
+                    <span>Shawnmichaels Rodriguez Calderon</span>
+                    <span id="shawn-percent">0%</span>
+                </div>
+
+                <div class="progress-bar">
+                    <div
+                        id="shawn-bar"
+                        class="progress-fill">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="result">
+
+                <div class="result-header">
+                    <span>Nikki Anup</span>
+                    <span id="nikki-percent">0%</span>
+                </div>
+
+                <div class="progress-bar">
+                    <div
+                        id="nikki-bar"
+                        class="progress-fill">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <p class="last-updated" id="last-updated">
+                Updating...
             </p>
 
         </div>
 
-    </section>
 
+        <p class="poll-note">
+            This is an informal prediction poll and is not the official
+            Student Body President election.
+        </p>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    const RESULTS_URL =
+        "https://script.google.com/macros/s/AKfycbxKf6E-V8g0jZnZanzrHkGw9fuGyihkVI99Iei5TdYkE4ZLufz0i1A0LT872j5IbiR3/exec";
+
+
+    async function loadResults() {
+
+        try {
+
+            const response = await fetch(RESULTS_URL);
+
+            const data = await response.json();
+
+            const total = data.totalVotes;
+
+
+            document.getElementById("total-votes").textContent = total;
+
+
+            if (total === 0) {
+
+                document.getElementById("jude-percent").textContent = "0%";
+                document.getElementById("shawn-percent").textContent = "0%";
+                document.getElementById("nikki-percent").textContent = "0%";
+
+                return;
+
+            }
+
+
+            const jude =
+                Math.round(
+                    (data.results["Jude Cain"] / total) * 100
+                );
+
+
+            const shawn =
+                Math.round(
+                    (data.results["Shawnmichaels Rodriguez Calderon"] / total) * 100
+                );
+
+
+            const nikki =
+                Math.round(
+                    (data.results["Nikki Anup"] / total) * 100
+                );
+
+
+            document.getElementById("jude-percent").textContent =
+                jude + "%";
+
+
+            document.getElementById("shawn-percent").textContent =
+                shawn + "%";
+
+
+            document.getElementById("nikki-percent").textContent =
+                nikki + "%";
+
+
+            document.getElementById("jude-bar").style.width =
+                jude + "%";
+
+
+            document.getElementById("shawn-bar").style.width =
+                shawn + "%";
+
+
+            document.getElementById("nikki-bar").style.width =
+                nikki + "%";
+
+
+            document.getElementById("last-updated").textContent =
+                "Results update automatically";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById("total-votes").textContent =
+                "Unavailable";
+
+            document.getElementById("last-updated").textContent =
+                "Unable to load results";
+
+        }
+
+    }
+
+
+    loadResults();
+
+
+    // Refresh results every 30 seconds
+
+    setInterval(loadResults, 30000);
+
+</script>
+
+    .results-container {
+    margin-top: 50px;
+    background: #292929;
+    padding: 30px;
+    border-radius: 18px;
+    text-align: left;
+}
+
+.results-container h3 {
+    text-align: center;
+    color: var(--green);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.vote-count {
+    text-align: center;
+    color: #ccc;
+    margin-bottom: 30px;
+}
+
+.vote-count strong {
+    color: white;
+}
+
+.result {
+    margin-bottom: 25px;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: white;
+    font-weight: bold;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 14px;
+    background: #444;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--green);
+    border-radius: 20px;
+    transition: width 0.8s ease;
+}
+
+.last-updated {
+    text-align: center;
+    color: #888;
+    font-size: 0.8rem;
+    margin-top: 25px;
+}
 
     <!-- FOOTER -->
 
